@@ -1,0 +1,8 @@
+package com.sportbook.bookingservice.enums;
+
+public enum BookingStatus {
+    PENDING,
+    CONFIRMED,
+    CANCELLED,
+    COMPLETED
+}
