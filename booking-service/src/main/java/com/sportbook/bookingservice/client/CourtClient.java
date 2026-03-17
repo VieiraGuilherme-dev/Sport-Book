@@ -1,12 +1,11 @@
 package com.sportbook.bookingservice.client;
 
-
 import com.sportbook.bookingservice.dto.ApiResponse;
 import com.sportbook.bookingservice.dto.CourtClientResponse;
 import com.sportbook.bookingservice.exception.CourtServiceUnavailableException;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
