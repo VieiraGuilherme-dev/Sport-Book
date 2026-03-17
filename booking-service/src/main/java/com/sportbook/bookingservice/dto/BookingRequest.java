@@ -1,5 +1,6 @@
 package com.sportbook.bookingservice.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
@@ -27,9 +28,11 @@ public class BookingRequest {
     private LocalDate bookingDate;
 
     @NotNull(message = "Horário de início é obrigatório")
+    @JsonFormat(pattern = "HH:mm:ss")
     private LocalTime startTime;
 
     @NotNull(message = "Horário de término é obrigatório")
+    @JsonFormat(pattern = "HH:mm:ss")
     private LocalTime endTime;
 
     private String notes;
