@@ -1,7 +1,6 @@
 package com.sportbook.courtservice.service;
 
-
-
+import com.sportbook.courtservice.dto.CourtFilterRequest;
 import com.sportbook.courtservice.dto.CourtRequest;
 import com.sportbook.courtservice.dto.CourtResponse;
 import com.sportbook.courtservice.entity.Court;
@@ -13,10 +12,8 @@ import com.sportbook.courtservice.repository.CourtRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -112,5 +109,18 @@ public class CourtService {
         }
 
         courtRepository.deleteById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public List<CourtResponse> findWithFilters(CourtFilterRequest filter) {
+        return courtRepository.findWithFilters(
+                        filter.getSportType(),
+                        filter.getStatus(),
+                        filter.getMinPrice(),
+                        filter.getMaxPrice()
+                )
+                .stream()
+                .map(CourtResponse::from)
+                .toList();
     }
 }
