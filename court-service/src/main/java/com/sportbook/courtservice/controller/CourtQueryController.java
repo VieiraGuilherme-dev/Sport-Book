@@ -1,7 +1,9 @@
 package com.sportbook.courtservice.controller;
 
 import com.sportbook.courtservice.dto.ApiResponse;
+import com.sportbook.courtservice.dto.CourtFilterRequest;
 import com.sportbook.courtservice.dto.CourtResponse;
+import com.sportbook.courtservice.enums.CourtStatus;
 import com.sportbook.courtservice.enums.SportType;
 import com.sportbook.courtservice.service.CourtService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -48,5 +51,21 @@ public class CourtQueryController {
     @Operation(summary = "Listar quadras disponíveis por tipo de esporte")
     public ResponseEntity<ApiResponse<List<CourtResponse>>> findAvailableBySportType(@PathVariable SportType sportType) {
         return ResponseEntity.ok(ApiResponse.success(courtService.findAvailableBySportType(sportType)));
+    }
+    @GetMapping("/filter")
+    @Operation(summary = "Filtrar quadras por esporte, status e faixa de preço")
+    public ResponseEntity<ApiResponse<List<CourtResponse>>> findWithFilters(
+            @RequestParam(required = false) SportType sportType,
+            @RequestParam(required = false) CourtStatus status,
+            @RequestParam(required = false) BigDecimal minPrice,
+            @RequestParam(required = false) BigDecimal maxPrice) {
+
+        CourtFilterRequest filter = new CourtFilterRequest();
+        filter.setSportType(sportType);
+        filter.setStatus(status);
+        filter.setMinPrice(minPrice);
+        filter.setMaxPrice(maxPrice);
+
+        return ResponseEntity.ok(ApiResponse.success(courtService.findWithFilters(filter)));
     }
 }
