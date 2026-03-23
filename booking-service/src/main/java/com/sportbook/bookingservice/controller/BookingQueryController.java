@@ -4,6 +4,7 @@ package com.sportbook.bookingservice.controller;
 
 import com.sportbook.bookingservice.dto.ApiResponse;
 import com.sportbook.bookingservice.dto.BookingResponse;
+import com.sportbook.bookingservice.dto.WeeklyBookingResponse;
 import com.sportbook.bookingservice.service.BookingQueryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -52,6 +53,13 @@ public class BookingQueryController {
     public ResponseEntity<ApiResponse<List<BookingResponse>>> findByDate(
             @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return ResponseEntity.ok(ApiResponse.success(bookingQueryService.findByDate(date)));
+    }
+    @GetMapping("/weekly")
+    @Operation(summary = "Histórico semanal de agendamentos agrupados por dia")
+    public ResponseEntity<ApiResponse<List<WeeklyBookingResponse>>> findWeeklyHistory(
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        return ResponseEntity.ok(ApiResponse.success(bookingQueryService.findWeeklyHistory(date)));
     }
 
 }
