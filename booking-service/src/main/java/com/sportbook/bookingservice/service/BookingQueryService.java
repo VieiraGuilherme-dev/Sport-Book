@@ -1,6 +1,7 @@
 package com.sportbook.bookingservice.service;
 
 import com.sportbook.bookingservice.dto.BookingResponse;
+import com.sportbook.bookingservice.dto.WeeklyBookingResponse;
 import com.sportbook.bookingservice.entity.Booking;
 import com.sportbook.bookingservice.exception.BookingNotFoundException;
 import com.sportbook.bookingservice.repository.BookingRepository;
@@ -50,6 +51,35 @@ public class BookingQueryService {
         return bookingRepository.findByBookingDate(date)
                 .stream()
                 .map(BookingResponse::from)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<WeeklyBookingResponse> findWeeklyHistory(LocalDate referenceDate) {
+        LocalDate date = referenceDate != null ? referenceDate : LocalDate.now();
+
+        LocalDate startOfWeek = date.with(java.time.DayOfWeek.MONDAY);
+        LocalDate endOfWeek = date.with(java.time.DayOfWeek.SUNDAY);
+
+        List<Booking> bookings = bookingRepository
+                .findByBookingDateBetweenOrderByBookingDateAscStartTimeAsc(startOfWeek, endOfWeek);
+
+        return startOfWeek.datesUntil(endOfWeek.plusDays(1))
+                .map(day -> {
+                    List<BookingResponse> dayBookings = bookings.stream()
+                            .filter(b -> b.getBookingDate().equals(day))
+                            .map(BookingResponse::from)
+                            .toList();
+
+                    return WeeklyBookingResponse.builder()
+                            .day(day)
+                            .dayOfWeek(day.getDayOfWeek().getDisplayName(
+                                    java.time.format.TextStyle.FULL,
+                                    new java.util.Locale("pt", "BR")))
+                            .totalBookings(dayBookings.size())
+                            .bookings(dayBookings)
+                            .build();
+                })
                 .toList();
     }
 }
