@@ -22,9 +22,12 @@ public class CourtRequest {
     @NotBlank(message = "Localização é obrigatória")
     private String location;
 
+    @Size(max = 100, message = "Nome do prédio deve ter no máximo 100 caracteres")
+    private String building;
+
     private String description;
 
     @NotNull(message = "Preço por hora é obrigatório")
     @DecimalMin(value = "0.01", message = "Preço deve ser maior que zero")
     private BigDecimal pricePerHour;
-}
+}   

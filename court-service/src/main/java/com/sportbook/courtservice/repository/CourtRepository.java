@@ -20,6 +20,8 @@ public interface CourtRepository extends JpaRepository<Court, Long> {
 
     List<Court> findBySportTypeAndStatus(SportType sportType, CourtStatus status);
 
+    List<Court> findByBuildingIgnoreCase(String building);
+
     boolean existsByNameAndLocation(String name, String location);
 
     @Query("""

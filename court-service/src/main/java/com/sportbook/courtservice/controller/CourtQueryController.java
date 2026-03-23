@@ -52,6 +52,14 @@ public class CourtQueryController {
     public ResponseEntity<ApiResponse<List<CourtResponse>>> findAvailableBySportType(@PathVariable SportType sportType) {
         return ResponseEntity.ok(ApiResponse.success(courtService.findAvailableBySportType(sportType)));
     }
+
+    // ✅ NOVO ENDPOINT
+    @GetMapping("/building/{building}")
+    @Operation(summary = "Buscar quadras por prédio ou condomínio")
+    public ResponseEntity<ApiResponse<List<CourtResponse>>> findByBuilding(@PathVariable String building) {
+        return ResponseEntity.ok(ApiResponse.success(courtService.findByBuilding(building)));
+    }
+
     @GetMapping("/filter")
     @Operation(summary = "Filtrar quadras por esporte, status e faixa de preço")
     public ResponseEntity<ApiResponse<List<CourtResponse>>> findWithFilters(

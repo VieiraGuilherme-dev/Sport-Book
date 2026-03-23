@@ -51,4 +51,7 @@ public class Court {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @Column(length = 100)
+    private String building;
 }

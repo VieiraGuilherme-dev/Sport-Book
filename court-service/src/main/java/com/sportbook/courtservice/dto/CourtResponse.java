@@ -17,6 +17,7 @@ public class CourtResponse {
     private String name;
     private SportType sportType;
     private String location;
+    private String building;
     private String description;
     private BigDecimal pricePerHour;
     private CourtStatus status;
@@ -29,6 +30,7 @@ public class CourtResponse {
                 .name(court.getName())
                 .sportType(court.getSportType())
                 .location(court.getLocation())
+                .building(court.getBuilding())
                 .description(court.getDescription())
                 .pricePerHour(court.getPricePerHour())
                 .status(court.getStatus())

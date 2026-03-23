@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
-
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -56,6 +55,15 @@ public class CourtService {
     @Transactional(readOnly = true)
     public List<CourtResponse> findAvailableBySportType(SportType sportType) {
         return courtRepository.findBySportTypeAndStatus(sportType, CourtStatus.AVAILABLE)
+                .stream()
+                .map(CourtResponse::from)
+                .toList();
+    }
+
+    // ✅ NOVO MÉTODO
+    @Transactional(readOnly = true)
+    public List<CourtResponse> findByBuilding(String building) {
+        return courtRepository.findByBuildingIgnoreCase(building)
                 .stream()
                 .map(CourtResponse::from)
                 .toList();
