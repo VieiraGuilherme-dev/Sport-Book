@@ -19,6 +19,10 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     List<Booking> findByCustomerEmail(String email);
     List<Booking> findByStatus(BookingStatus status);
     List<Booking> findByBookingDate(LocalDate date);
+    List<Booking> findByBookingDateBetweenOrderByBookingDateAscStartTimeAsc(
+            LocalDate startDate,
+            LocalDate endDate
+    );
 
     @Query("""
         SELECT COUNT(b) > 0 FROM Booking b
