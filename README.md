@@ -4,12 +4,6 @@ Sistema backend para gerenciamento de aluguel de quadras esportivas, desenvolvid
 
 ---
 
-## Arquitetura do Sistema
-
-![Arquitetura do SportBook](booking-service/img/sportBook-archtecture.png)
-
----
-
 ## Tecnologias Utilizadas
 
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
